@@ -2,9 +2,7 @@
 
 This project provides examples of how to use the Ziti GoLang SDK to both host and consume HTTP services over an
 [OpenZiti overlay network](https://github.com/openziti/ziti). The Ziti SDK provides `ZitiTransport` which 
-implements `http.Transport` and `http.RountTripper` to intercept socket requests and instead provide 
-`edge.Conn` instances which stand in as `net.Conn` interface implementors. This allows most GoLang HTTP clients 
-and server libraries/framework to seamlessly work over an OpenZiti network.
+implements `http.Transport` and `edge.Conn` instances which can be used as `net.Listener` instances.
 
 Links to the different projects and their example OpenZiti integrations can be found below.
 
@@ -32,7 +30,7 @@ which can be used as an `http.Transport`, and `edge.Listener`, that can be used 
 can be used to create `http.Client` instances and `edge.Listener` can be used to with `http.Serve(listener,...)` calls.
 The rest of the GoLang HTTP machinery handles all the HTTP interactions unknowingly over an OpenZiti network.
 
-If you want a deep dive, the `ZitiTransport` definition can be found [here](https://github.com/openziti/sdk-golang/blob/main/http_transport.go)
+If you want to deep dive, the `ZitiTransport` definition can be found [here](https://github.com/openziti/sdk-golang/blob/main/http_transport.go)
 and `edge.Listen()` can be found [here](https://github.com/openziti/sdk-golang/blob/main/ziti/ziti.go#L590).
 
 ## Client
@@ -109,8 +107,8 @@ You will need the [Ziti CLI](https://github.com/openziti/ziti/cmd/ziti) installe
 4) Create policies
     - `ziti create service-policy httpServers Bind --identity-roles #httpServer --service-roles #httpService`
     - `ziti create service-policy httpClients Dial --identity-roles #httpClient --service-roles #httpService`
-6) Enroll your identities
+5) Enroll your identities
     - `ziti edge enroll server.jwt` > creates `server.json`
     - `ziti edge enroll client.jwt` > creates `client.json`
-7) Start an example
+6) Start an example
     - `ziti-server-gin myHttpService server.json`
