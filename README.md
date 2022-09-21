@@ -112,3 +112,9 @@ You will need the [Ziti CLI](https://github.com/openziti/ziti/cmd/ziti) installe
     - `ziti edge enroll client.jwt` > creates `client.json`
 6) Start an example
     - `ziti-server-gin myHttpService server.json`
+
+
+
+- Main OpenZiti [repo](https://github.com/openziti/ziti)
+- Join the [dicussion](https://openziti.discourse.group/)
+- Follow [@openziti](https://twitter.com/openziti)
