@@ -1,8 +1,10 @@
 # go-http
 
 This project provides examples of how to use the Ziti GoLang SDK to both host and consume HTTP services over an
-[OpenZiti overlay network](https://github.com/openziti/ziti). The Ziti SDK provides `ZitiTransport` which 
-implements `http.Transport` and `edge.Conn` instances which can be used as `net.Listener` instances.
+[OpenZiti overlay network](https://github.com/openziti/ziti) using a variety of libraries. The Ziti SDK provides 
+`ZitiTransport` which implements `http.Transport` and `edge.Conn` instances which can be used as `net.Listener`
+instances. Hosting and consuming HTTP APIs over a private overlay network with no open ports adds a layer of defense 
+against most OWASP API attack vectors.
 
 Links to the different projects and their example OpenZiti integrations can be found below.
 
@@ -29,6 +31,8 @@ The [OpenZiti GoLang SDK](https://github.com/openziti/sdk-golang) provides [`Zit
 which can be used as an `http.Transport`, and `edge.Listener`, that can be used as a `net.Listener`. `ZitiTransport`
 can be used to create `http.Client` instances and `edge.Listener` can be used to with `http.Serve(listener,...)` calls.
 The rest of the GoLang HTTP machinery handles all the HTTP interactions unknowingly over an OpenZiti network.
+
+This same pattern can be used to inject any kind of custom networking you wish!
 
 If you want to deep dive, the `ZitiTransport` definition can be found [here](https://github.com/openziti/sdk-golang/blob/main/http_transport.go)
 and `edge.Listen()` can be found [here](https://github.com/openziti/sdk-golang/blob/main/ziti/ziti.go#L590).
@@ -95,7 +99,7 @@ Additionally, a service, service host and client will need to be created. The ho
 policies to access and host the service. To set up an OpenZiti network, please see the 
 [quickstart guides](https://openziti.github.io/ziti/quickstarts/quickstart-overview.html).
 
-You will need the [Ziti CLI](https://github.com/openziti/ziti/cmd/ziti) installed and on your path.
+You will need the Ziti CLI from the [main Ziti repository](https://github.com/openziti/ziti) installed and on your path.
 
 1) Login 
     - `ziti edge login "https://localhost:1280/edge/management/v1" -c $controllerCa -u $user -p $password`
