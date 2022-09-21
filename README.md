@@ -30,13 +30,27 @@ the GoLang HTTP packages.
 If you want a deep dive, the `ZitiTransport` definition can be found [here](https://github.com/openziti/sdk-golang/blob/main/http_transport.go)
 
 ## Client
+Before:
+```go
+    client := http.DefaultClient
+    resp, err := client.Get("http://" + args.ServiceName)
+```
 
+After:
 ```go
 	client := sdk_golang.NewHttpClient(ctx, args.TlsConfig)
 	resp, err := client.Get("http://" + args.ServiceName)
 ```
 
 ## Server
+Before:
+```go
+	if err := http.Serve(listener, http.HandlerFunc(handler)); err != nil {
+		log.Fatalf("serving failed: %v", err)
+	}
+```
+
+After:
 ```go
 	listener, err = ctx.Listen(args.ServiceName)
 
@@ -56,18 +70,32 @@ initiate the TLS connection over the OpenZiti network.
 
 `ziti-server-gin <serviceName> <identityConfig> [<certificate> <key>]`
 
+However, HTTPS when working with OpenZiti is not necessary. See the next section!
+
+# A Note on HTTPS
+
+Hosting an HTTPS server over OpenZiti means that a TLS handshake will occur. A TLS handshake
+requires that the server presents a certificate with a SAN IP or a SAN DNS entry that matches
+the address the client used to access the service. For OpenZiti this means that a SAN DNS
+that matches the OpenZiti service name must be present.
+
+If the service will only be hosted over OpenZiti, HTTPS is an extra layer of security that can safely
+be omitted. OpenZiti connections are inherently end-to-end encrypted and the data plane across
+an OpenZiti network is additionally encrypted on each leg of transit. Additionally, the controller
+has already verified all clients and hosts before they "dial" (connect) or "bind" (host).
+
 # ZitiTransport
 
 The [OpenZiti GoLang SDK](https://github.com/openziti/sdk-golang) provides a [`ZitiTransport`](https://github.com/openziti/sdk-golang/blob/main/http_transport.go)
 which can be used as an `http.Transport`. This effectively reduces all examples to providing an `http.Client` that uses a
 `ZitiTransport` instance that implements `http.RountTripper`. The rest of the GoLang HTTP machinery handles all
-the HTTP interactions unknowing over an OpenZiti network.
+the HTTP interactions unknowingly over an OpenZiti network.
 
 # Setting Up The Examples
 
 In order to run these examples, an OpenZiti network must be up and running. This includes a controller and router.
 Additionally, a service, service host and client will need to be created. The host and client identities will need
-policies to access and host the service. To setup an OpenZiti network, please see the 
+policies to access and host the service. To set up an OpenZiti network, please see the 
 [quickstart guides](https://openziti.github.io/ziti/quickstarts/quickstart-overview.html).
 
 You will need the [Ziti CLI](https://github.com/openziti/ziti/cmd/ziti) installed and on your path.
@@ -87,14 +115,3 @@ You will need the [Ziti CLI](https://github.com/openziti/ziti/cmd/ziti) installe
     - `ziti edge enroll client.jwt` > creates `client.json`
 7) Start an example
     - `ziti-server-gin myHttpService server.json`
-
-# A Note on HTTPS
-
-Hosting an HTTPS server over OpenZiti means that a TLS handshake will occur. A TLS handshake
-requires that the server presents a certificate with a SAN IP or a SAN DNS entry that matches
-the address the client used to access the service. For OpenZiti this means that a SAN DNS
-that matches the OpenZiti service name must be present. 
-
-If the service will only be hosted over OpenZiti, HTTPS is an extra layer of security that can safely
-be omitted. OpenZiti connections are inherently end-to-end encrypted and the data plane across
-an OpenZiti network is additionally encrypted on each leg of transit.

@@ -37,7 +37,7 @@ func main() {
 	}
 
 	if err := http.Serve(listener, http.HandlerFunc(handler)); err != nil {
-		log.Fatalf("https servering failed: %v", err)
+		log.Fatalf("https serving failed: %v", err)
 	}
 }
 
