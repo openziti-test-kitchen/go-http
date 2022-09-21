@@ -20,10 +20,32 @@ Links to the different projects and their example OpenZiti integrations can be f
 - [Standard Go Client](https://pkg.go.dev/net/http) - [example](./cmd/ziti-client-go/main.go)
 - [Resty](https://github.com/go-resty/resty) - [example](./cmd/ziti-client-resty/main.go)
 
+# The Main Magic
 
-# Explanation of Examples
+GoLang's built in HTTP facilitates provide excellent methods for hooking into them. With the use of
+the OpenZiti SDK it essentially boils down to the following patterns that work for the standard
+GoLang HTTP client and server. These can then be adjusted to fit into any framework/library that uses
+the GoLang HTTP packages.
 
-# CLI Arguments
+If you want a deep dive, the `ZitiTransport` definition can be found [here](https://github.com/openziti/sdk-golang/blob/main/http_transport.go)
+
+## Client
+
+```go
+	client := sdk_golang.NewHttpClient(ctx, args.TlsConfig)
+	resp, err := client.Get("http://" + args.ServiceName)
+```
+
+## Server
+```go
+	listener, err = ctx.Listen(args.ServiceName)
+
+	if err := http.Serve(listener, http.HandlerFunc(handler)); err != nil {
+		log.Fatalf("https serving failed: %v", err)
+	}
+```
+
+# Example CLI Arguments
 
 Each example uses the same [command line argument processing](./cmd/args.go). This processing takes in two
 or four arguments that specify the Ziti Identity configuration file and OpenZiti service name. The two
@@ -36,8 +58,8 @@ initiate the TLS connection over the OpenZiti network.
 
 # ZitiTransport
 
-The [OpenZiti GoLang SDK](https://github.com/openziti/sdk-golang) provides a `ZitiTransport` which can be used
-as an `http.Transport`. This effectively reduces all examples to providing an `http.Client` that uses a
+The [OpenZiti GoLang SDK](https://github.com/openziti/sdk-golang) provides a [`ZitiTransport`](https://github.com/openziti/sdk-golang/blob/main/http_transport.go)
+which can be used as an `http.Transport`. This effectively reduces all examples to providing an `http.Client` that uses a
 `ZitiTransport` instance that implements `http.RountTripper`. The rest of the GoLang HTTP machinery handles all
 the HTTP interactions unknowing over an OpenZiti network.
 
