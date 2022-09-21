@@ -65,3 +65,14 @@ You will need the [Ziti CLI](https://github.com/openziti/ziti/cmd/ziti) installe
     - `ziti edge enroll client.jwt` > creates `client.json`
 7) Start an example
     - `ziti-server-gin myHttpService server.json`
+
+# A Note on HTTPS
+
+Hosting an HTTPS server over OpenZiti means that a TLS handshake will occur. A TLS handshake
+requires that the server presents a certificate with a SAN IP or a SAN DNS entry that matches
+the address the client used to access the service. For OpenZiti this means that a SAN DNS
+that matches the OpenZiti service name must be present. 
+
+If the service will only be hosted over OpenZiti, HTTPS is an extra layer of security that can safely
+be omitted. OpenZiti connections are inherently end-to-end encrypted and the data plane across
+an OpenZiti network is additionally encrypted on each leg of transit.
