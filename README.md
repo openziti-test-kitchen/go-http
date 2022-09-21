@@ -27,7 +27,13 @@ the OpenZiti SDK it essentially boils down to the following patterns that work f
 GoLang HTTP client and server. These can then be adjusted to fit into any framework/library that uses
 the GoLang HTTP packages.
 
+The [OpenZiti GoLang SDK](https://github.com/openziti/sdk-golang) provides [`ZitiTransport`](https://github.com/openziti/sdk-golang/blob/main/http_transport.go),
+which can be used as an `http.Transport`, and `edge.Listener`, that can be used as a `net.Listener`. `ZitiTransport`
+can be used to create `http.Client` instances and `edge.Listener` can be used to with `http.Serve(listener,...)` calls.
+The rest of the GoLang HTTP machinery handles all the HTTP interactions unknowingly over an OpenZiti network.
+
 If you want a deep dive, the `ZitiTransport` definition can be found [here](https://github.com/openziti/sdk-golang/blob/main/http_transport.go)
+and `edge.Listen()` can be found [here](https://github.com/openziti/sdk-golang/blob/main/ziti/ziti.go#L590).
 
 ## Client
 Before:
@@ -38,7 +44,7 @@ Before:
 
 After:
 ```go
-	client := sdk_golang.NewHttpClient(ctx, args.TlsConfig)
+	client := sdk_golang.NewHttpClient(ctx, nil)
 	resp, err := client.Get("http://" + args.ServiceName)
 ```
 
@@ -83,13 +89,6 @@ If the service will only be hosted over OpenZiti, HTTPS is an extra layer of sec
 be omitted. OpenZiti connections are inherently end-to-end encrypted and the data plane across
 an OpenZiti network is additionally encrypted on each leg of transit. Additionally, the controller
 has already verified all clients and hosts before they "dial" (connect) or "bind" (host).
-
-# ZitiTransport
-
-The [OpenZiti GoLang SDK](https://github.com/openziti/sdk-golang) provides a [`ZitiTransport`](https://github.com/openziti/sdk-golang/blob/main/http_transport.go)
-which can be used as an `http.Transport`. This effectively reduces all examples to providing an `http.Client` that uses a
-`ZitiTransport` instance that implements `http.RountTripper`. The rest of the GoLang HTTP machinery handles all
-the HTTP interactions unknowingly over an OpenZiti network.
 
 # Setting Up The Examples
 
