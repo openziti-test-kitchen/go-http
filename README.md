@@ -10,14 +10,18 @@ Links to the different projects and their example integrations can be found belo
 
 ![Example Network](diagram.png)
 
-# Servers
+# Examples
+
+The examples are all runnable executables under the [`cmd`](./cmd) directory.
+
+## Servers
 
 - [Standard Go Server](https://pkg.go.dev/net/http) - [example](./cmd/ziti-server-go/main.go)
 - [Gin](https://github.com/gin-gonic/gin) - [example](./cmd/ziti-server-gin/main.go)
 - [Goji](https://github.com/goji/goji) - [example](./cmd/ziti-server-goji/main.go)
 - [Gorilla](https://github.com/gorilla/mux) - [example](./cmd/ziti-server-gorilla/main.go)
 
-# Clients
+## Clients
 
 - [Standard Go Client](https://pkg.go.dev/net/http) - [example](./cmd/ziti-client-go/main.go)
 - [Resty](https://github.com/go-resty/resty) - [example](./cmd/ziti-client-resty/main.go)
