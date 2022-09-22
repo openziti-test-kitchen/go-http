@@ -1,12 +1,14 @@
 # go-http
 
-This project provides examples of how to use the Ziti GoLang SDK to both host and consume HTTP services over an
-[OpenZiti overlay network](https://github.com/openziti/ziti) using a variety of libraries. The Ziti SDK provides 
-`ZitiTransport` which implements `http.Transport` and `edge.Conn` instances which can be used as `net.Listener`
-instances. Hosting and consuming HTTP APIs over a private overlay network with no open ports adds a layer of defense 
-against most OWASP API attack vectors.
+This project provides examples of how to use different mechanisms within the GoLang HTTP standard libraries
+to intercept network socket creation in order to route HTTP client and server traffic over alternative networks.
 
-Links to the different projects and their example OpenZiti integrations can be found below.
+Specifically, the [OpenZiti overlay network](https://github.com/openziti/ziti)  GoLang SDK is used to create `net.Conn` 
+implementations that can be used in`net.Listener` use cases (servers) and `http.Client`.
+
+Links to the different projects and their example integrations can be found below.
+
+![Example Network](diagram.png)
 
 # Servers
 
@@ -27,10 +29,11 @@ the OpenZiti SDK it essentially boils down to the following patterns that work f
 GoLang HTTP client and server. These can then be adjusted to fit into any framework/library that uses
 the GoLang HTTP packages.
 
-The [OpenZiti GoLang SDK](https://github.com/openziti/sdk-golang) provides [`ZitiTransport`](https://github.com/openziti/sdk-golang/blob/main/http_transport.go),
-which can be used as an `http.Transport`, and `edge.Listener`, that can be used as a `net.Listener`. `ZitiTransport`
-can be used to create `http.Client` instances and `edge.Listener` can be used to with `http.Serve(listener,...)` calls.
-The rest of the GoLang HTTP machinery handles all the HTTP interactions unknowingly over an OpenZiti network.
+The [OpenZiti GoLang SDK](https://github.com/openziti/sdk-golang) provides 
+[`ZitiTransport`](https://github.com/openziti/sdk-golang/blob/main/http_transport.go), which can be used as an 
+`http.Transport`, and `edge.Listener` that can be used as a `net.Listener`. `ZitiTransport` can be used to create 
+`http.Client` instances and `edge.Listener` can be used to with `http.Serve(listener,...)` calls. The rest of the 
+GoLang HTTP machinery handles all the HTTP interactions unknowingly over an OpenZiti network.
 
 This same pattern can be used to inject any kind of custom networking you wish!
 
