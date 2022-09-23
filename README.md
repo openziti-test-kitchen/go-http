@@ -14,8 +14,8 @@ This enables OSI level 3 API Security for software developers. Normally layer 3 
 network experts.
 
 Additionally, this approach is orthogonal to the development of the application logic. Meaning it can
-be added or removed at any time. Old applications can be converted as the main interfaces (`net.Conn` and
-`net.Listner`) are used. The client/servers are unaware of any networking change. This also means that other GoLang
+be added or removed at any time. Old applications can be converted as the main interfaces `net.Conn` and
+`net.Listner` are used. The client/servers are unaware of any networking change. This also means that other GoLang
 libraries easily fit this model too - not just HTTP.
 
 Consider the following diagram where existing HTTP API Clients and HTTP API Server is secured using one alternative
