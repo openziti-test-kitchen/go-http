@@ -142,9 +142,3 @@ You will need the Ziti CLI from the [main Ziti repository](https://github.com/op
 6) Start an example
    - `ziti-server-go myHttpService server.json`
    - `ziti-client-resty myHttpService client.json`
-
-
-
-- Main OpenZiti [repo](https://github.com/openziti/ziti)
-- Join the [dicussion](https://openziti.discourse.group/)
-- Follow [@openziti](https://twitter.com/openziti)
