@@ -117,6 +117,15 @@ has already verified all clients and hosts before they "dial" (connect) or "bind
 
 ![](diagram-encrypt.png)
 
+# Building The Examples
+
+1) `git clone https://github.com/openziti-test-kitchen/go-http.git`
+2) `cd go-http`
+3) `go install ./...`
+4) `~/go/bin/ziti-server-go ...` or `$GOBIN/ziti-server-go ...` if you have a custom `GOBIN` environment variable
+
+After building the examples, see the next section on setting up a network.
+
 # Setting Up The Examples
 
 To run these examples an OpenZiti network must be up and running. This includes a controller and router.
