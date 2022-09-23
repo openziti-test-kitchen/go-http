@@ -6,9 +6,19 @@ to intercept network socket creation in order to route HTTP client and server tr
 Specifically, the [OpenZiti overlay network](https://github.com/openziti/ziti)  GoLang SDK is used to create `net.Conn` 
 implementations that can be used in`net.Listener` use cases (servers) and `http.Client`.
 
-Links to the different projects and their example integrations can be found below.
 
-![Example Network](diagram.png)
+# Why?
+
+Taking over socket level connections make it easy to integrate alternative networking into GoLang based applications
+for HTTP. This enables level 3 API Security for software developers.
+
+Consider the following diagram where existing HTTP API Clients and HTTP API Server is secured using one alternative
+networking solution: OpenZiti. The Application Server (e.g. HTTP API Server) does not open any ports for listening. 
+Rather the SDK calls out to an overlay network that verifies it. In this scenario the Application Server cannot
+be scanned by normal means on the internet or an internal network unless the overlay network is compromised first.
+
+![Example Network](diagram-overall.png)
+
 
 # Examples
 
@@ -98,6 +108,8 @@ If the service will only be hosted over OpenZiti, HTTPS is an extra layer of sec
 be omitted. OpenZiti connections are inherently end-to-end encrypted and the data plane across
 an OpenZiti network is additionally encrypted on each leg of transit. Additionally, the controller
 has already verified all clients and hosts before they "dial" (connect) or "bind" (host).
+
+![](diagram-encrypt.png)
 
 # Setting Up The Examples
 
