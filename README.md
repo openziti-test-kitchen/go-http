@@ -11,7 +11,7 @@ implementations that can be used in`net.Listener` use cases (servers) and `http.
 
 Taking over socket level connections make it easy to integrate alternative networking into GoLang based applications.
 This enables OSI level 3 API Security for software developers. Normally layer 3 concerns are delegated to
-network experts.
+network engineers as physical hardware or cloud resources are invovled.
 
 Additionally, this approach is orthogonal to the development of the application logic. Meaning it can
 be added or removed at any time. Old applications can be converted as the main interfaces `net.Conn` and
