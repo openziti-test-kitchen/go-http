@@ -140,7 +140,8 @@ You will need the Ziti CLI from the [main Ziti repository](https://github.com/op
    - `ziti edge enroll server.jwt` > creates `server.json`
    - `ziti edge enroll client.jwt` > creates `client.json`
 6) Start an example
-   - `ziti-server-gin myHttpService server.json`
+   - `ziti-server-go myHttpService server.json`
+   - `ziti-client-resty myHttpService client.json`
 
 
 
