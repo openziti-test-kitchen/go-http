@@ -51,7 +51,7 @@ the GoLang HTTP packages.
 
 The [OpenZiti GoLang SDK](https://github.com/openziti/sdk-golang) provides
 [`ZitiTransport`](https://github.com/openziti/sdk-golang/blob/main/http_transport.go), which can be used as an
-`http.Transport`, and `edge.Listener` that can be used as a `net.Listener`. `ZitiTransport` can be used to create
+`http.Transport`/`http.RoundTripper`, and `edge.Listener` that can be used as a `net.Listener`. `ZitiTransport` can be used to create
 `http.Client` instances and `edge.Listener` can be used to with `http.Serve(listener,...)` calls. The rest of the
 GoLang HTTP machinery handles all the HTTP interactions unknowingly over an OpenZiti network.
 
